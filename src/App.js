@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import ProductItem from './ProductItem'
 
 const products = [
   {
@@ -21,27 +22,45 @@ class App extends Component {
     
     // manage the state
     this.state = {
-      products: []
+      products: JSON.parse(localStorage.getItem('products')) // empty products
+      
     }
+
+    this.onDelete = this.onDelete.bind(this); // bind it on delete
   }
   componentWillMount(){ // check what data WILL be grabbed from the component
     // need javascript version
     // const products = JSON.parse(localStorage.getItem('products'));
     //const products = localStorage.getItem('products'); // get the products with json stringify version
     // call the getproducts function 
-    this.getProducts(); 
+    //this.getProducts(); 
 
+    // set this to a variable to be used
+    const products = this.getProducts();
+
+    this.setState({ products });
     // console.log(products); // check that you are getting the products
   }
 
   getProducts() {
-    const products = JSON.parse(localStorage.getItem('products'));
-
-    this.setState({
-      products
-    });
+    // just return the list of products by grabbing the state of the products
+    return this.state.products;
   }
 
+  onDelete(name) {
+    // store the products
+    const products = this.getProducts();
+
+    // filter them
+    const filteredProducts = products.filter(products =>{
+      return products.name !== name;
+    });
+    this.setState({
+      products: filteredProducts // set state of products to the new products after deletion
+    });
+    console.log(name); // check that it works
+    console.log(filteredProducts); // check that the array is being filtered
+  }
   render() {
     return (
       <div className="App">
@@ -49,13 +68,12 @@ class App extends Component {
         {
           this.state.products.map(products => { // key of products and displace spans with name and price
             return (
-              <div key={products.name}>
-                <span>{products.name}</span> 
-                {` | `} 
-                <span>{products.price}</span>
-                {` | `} 
-                <button>Delete</button>
-              </div>
+              <ProductItem
+                key={products.name}
+                name={products.name}
+                price={products.price}
+                onDelete={this.onDelete} // pass the onDelete method to the productitem component
+              />
             );
           })
         }
