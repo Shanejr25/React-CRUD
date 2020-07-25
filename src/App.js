@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import ProductItem from './ProductItem'
 import AddProduct from './AddProduct'
+import Helmet from 'react-helmet'
 
 const products = [
   {
@@ -88,9 +89,14 @@ class App extends Component {
     console.log(name); // check that it works
     console.log(filteredProducts); // check that the array is being filtered
   }
+
   render() {
     return (
+      
       <div className="App">
+        <Helmet>
+          <style>{'body{ background-color: darkcyan; }'}</style>
+        </Helmet>
         <h1>Products Manager</h1>
 
         <AddProduct
