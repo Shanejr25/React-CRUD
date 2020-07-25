@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ProductItem from './ProductItem'
-import AddProduct from './AddItem'
+import AddProduct from './AddProduct'
 
 const products = [
   {
