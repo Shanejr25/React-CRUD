@@ -10,7 +10,11 @@ class AddProduct extends Component {
   }
 
   onSubmit(event) {
-      event.preventDefault();
+      event.preventDefault(); // prevent page from refreshing
+      this.props.onAdd(this.nameInput.value, this.priceInput.value);
+
+      this.nameInput.value = ''; // clear the input fields
+      this.priceInput.value = '';
   }
     render (){
 

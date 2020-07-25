@@ -28,6 +28,7 @@ class App extends Component {
     }
     this.onAdd = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this); // bind it on delete
+    this.onEditSubmit = this.onEditSubmit.bind(this);
   }
   componentWillMount(){ // check what data WILL be grabbed from the component
     // need javascript version
@@ -49,7 +50,28 @@ class App extends Component {
   }
 
   onAdd(name, price) { // what do you need to add the product? name and price
+    const products = this.getProducts();
 
+    products.push({ // add the products to the array of products
+      name,
+      price
+    });
+
+    this.setState({ products });
+  }
+  // edit function
+  onEditSubmit(name, price, originalName){
+    let products = this.getProducts();
+
+    products = products.map(product => {
+      if (product.name === originalName){
+        product.name = name;
+        product.price = price;
+      }
+      return product;
+    });
+
+    this.setState({ products });
   }
 
   onDelete(name) {
@@ -82,6 +104,7 @@ class App extends Component {
                 name={products.name}
                 price={products.price}
                 onDelete={this.onDelete} // pass the onDelete method to the productitem component
+                onEditSubmit={this.onEditSubmit}
               />
             );
           })
