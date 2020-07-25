@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ProductItem from './ProductItem'
+import AddProduct from './AddItem'
 
 const products = [
   {
@@ -25,7 +26,7 @@ class App extends Component {
       products: JSON.parse(localStorage.getItem('products')) // empty products
       
     }
-
+    this.onAdd = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this); // bind it on delete
   }
   componentWillMount(){ // check what data WILL be grabbed from the component
@@ -47,6 +48,10 @@ class App extends Component {
     return this.state.products;
   }
 
+  onAdd(name, price) { // what do you need to add the product? name and price
+
+  }
+
   onDelete(name) {
     // store the products
     const products = this.getProducts();
@@ -65,6 +70,10 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Products Manager</h1>
+
+        <AddProduct
+          onAdd={this.onAdd}
+        />
         {
           this.state.products.map(products => { // key of products and displace spans with name and price
             return (
